@@ -4,7 +4,7 @@
  ###### Back-end : Node  JS, Express JS
  ###### Database : Mongo DB (Mongoose)
  ###### Authentication : Passport JS
- ###### Front-end : HTML, CSS, JS, Semantic UI, Bootstrap
+ ###### Front-end : HTML, EJS, CSS, JS, Semantic UI, Bootstrap
  ###### Machine Learning : Python (nltk : tokenizing ; python-pptx : reading pptx file ; numpy)
 
  
