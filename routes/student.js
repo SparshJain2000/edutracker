@@ -8,12 +8,12 @@ const express = require("express"),
     Faculty = require("../models/faculty"),
     Student = require("../models/student"),
     passport = require("passport");
-const fs = require("fs");
-const multer = require("multer");
+// const fs = require("fs");
+// const multer = require("multer");
 const mongoose = require("mongoose");
 const methodOverride = require("method-override");
-const GridFsStorage = require("multer-gridfs-storage");
-const Grid = require("gridfs-stream");
+// const GridFsStorage = require("multer-gridfs-storage");
+// const Grid = require("gridfs-stream");
 const path = require("path");
 
 //==========================================================================
