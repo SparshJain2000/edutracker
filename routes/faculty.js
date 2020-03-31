@@ -1,16 +1,7 @@
 const express = require("express"),
     router = express.Router(),
-    middleware = require("../middleware"),
     Faculty = require("../models/faculty"),
-    Student = require("../models/student"),
     passport = require("passport");
-const fs = require("fs");
-const multer = require("multer");
-const mongoose = require("mongoose");
-const methodOverride = require("method-override");
-const GridFsStorage = require("multer-gridfs-storage");
-const Grid = require("gridfs-stream");
-const path = require("path");
 
 //create faculty
 router.post("/", function(req, res) {

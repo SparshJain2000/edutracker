@@ -5,14 +5,11 @@
     <meta charset="utf-8" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
     <title>EduTracker</title>
-
     <meta name="description" content="" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-
     <!-- <link rel="manifest" href="site.webmanifest"> -->
     <link rel="shortcut icon" type="image/x-icon" href="img/favicon.png" />
     <!-- Place favicon.ico in the root directory -->
-
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
     <!-- jQuery library -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -418,14 +415,13 @@
                                 <div style="padding:0 15%;font-size:2em">
                                     <%var query2=query.split("+")%>
                                         <%var q=query2[0]%>
-                                            <%console.log(query)%>
-                                                <%for(var i=1;i<query2.length;i++){%>
-                                                    <%q+=", "+query2[i] %>
-                                                        <%}%>
+                                            <%for(var i=1;i<query2.length;i++){%>
+                                                <%q+=", "+query2[i] %>
+                                                    <%}%>
 
-                                                            <h1 class="badge badge-info" style="float:right">Showing results for
-                                                                <%=q%>
-                                                            </h1>
+                                                        <h1 class="badge badge-info" style="float:right">Showing results for
+                                                            <%=q%>
+                                                        </h1>
                                 </div>
                                 <footer class="footer" id="footer">
                                     <div class="footer_top">

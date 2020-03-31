@@ -2,62 +2,20 @@ const express = require("express"),
     router = express.Router(),
     request = require("request"),
     middleware = require("../middleware"),
-    cors = require("cors"),
-    // Pokemon = require("../models/pokemon"),
-    // Comment = require("../models/comments"),
-    Faculty = require("../models/faculty"),
     Student = require("../models/student"),
-    passport = require("passport");
-// const fs = require("fs");
-// const multer = require("multer");
-const mongoose = require("mongoose");
-const methodOverride = require("method-override");
-// const GridFsStorage = require("multer-gridfs-storage");
-// const Grid = require("gridfs-stream");
-const path = require("path");
+    passport = require("passport"),
+    path = require("path");
 
 //==========================================================================
-//download file
-
-// const mongoUrl =
-//     "mongodb+srv://raghav:qwerty12345@cluster0-lru38.mongodb.net/test?retryWrites=true&w=majority";
-// const conn = mongoose.createConnection(mongoUrl);
-// let gfs;
-// conn.once("open", function() {
-//     gfs = Grid(conn.db, mongoose.mongo);
-//     gfs.collection("uploads");
-// });
-// const storage = new GridFsStorage({
-//     url: mongoUrl,
-//     file: (req, file) => {
-//         return new Promise((resolve, reject) => {
-//             const fileInfo = {
-//                 filename: file.originalname,
-//                 bucketName: "uploads"
-//             };
-//             resolve(fileInfo);
-//         });
-//     }
-// });
-// const upload = multer({ storage });
-//show reg form
-// router.get("/new", (req, res) => {
-//     res.render("signup");
-// });
-
-//==========================================================================
-
 //create a new student
 router.post("/", function(req, res) {
     var newUser = new Student({ username: req.body.username, role: "Student" });
     Student.register(newUser, req.body.password, function(error, user) {
         if (error) {
             console.log(error.message);
-            // req.flash('error', error.message);
             return res.redirect("/signup");
         }
         passport.authenticate("student")(req, res, function() {
-            // req.flash("success", "Welcome " + user.username);
             res.redirect("/");
         });
     });
@@ -94,7 +52,6 @@ router.get("/logout", (req, res) => {
 //show resource page
 
 router.get("/", middleware.isStudent, (req, res) => {
-    console.log(req.query);
     let keywords;
     //==========================================================================
     //running python script
@@ -119,9 +76,7 @@ router.get("/", middleware.isStudent, (req, res) => {
         if (req.query.video != undefined) pary = req.query.video;
         if (req.query.book != undefined) parb = req.query.book;
         if (req.query.project != undefined) parg = req.query.project;
-
         if (query == null) query = "computer science";
-        console.log(query);
         let url =
             "https://api.elsevier.com/content/search/scopus?query=" +
             query +

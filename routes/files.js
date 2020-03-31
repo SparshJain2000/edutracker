@@ -14,8 +14,7 @@ app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 
-const mongoUrl =
-    "mongodb+srv://raghav:qwerty12345@cluster0-lru38.mongodb.net/test?retryWrites=true&w=majority";
+const mongoUrl = process.env.DATABASE_URL;
 const conn = mongoose.createConnection(mongoUrl);
 let gfs;
 conn.once("open", function() {

@@ -9,7 +9,9 @@ const express = require("express"),
     Faculty = require("./models/faculty"),
     cors = require("cors"),
     passport = require("passport"),
-    LocalStratergy = require("passport-local");
+    LocalStratergy = require("passport-local"),
+    env = require("dotenv");
+env.config();
 
 //===================================================================
 //Requiring ROUTES
@@ -21,13 +23,13 @@ var indexRoutes = require("./routes/index"),
 //===================================================================
 //Connecting mongoose to mongoDB
 
-mongoose.connect("mongodb://localhost:27017/edutracker", {
+mongoose.connect(process.env.DATABASE_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 });
 
 //===================================================================
-//linking external files
+//linking external files (stylesheets and scripts)
 app.use(express.static(__dirname + "/public"));
 
 //for flash messages
@@ -43,7 +45,7 @@ app.set("view engine", "ejs");
 //setting session
 app.use(
     require("express-session")({
-        secret: "bitchor",
+        secret: process.env.SECRET,
         resave: false,
         saveUninitialized: false
     })
@@ -51,16 +53,14 @@ app.use(
 
 //===================================================================
 //Passport initialization
+//multiple user type
 
 app.use(passport.initialize());
 app.use(passport.session());
-// passport.use(new LocalStratergy(Student.authenticate()));
+
 passport.use("student", new LocalStratergy(Student.authenticate()));
 passport.use("faculty", new LocalStratergy(Faculty.authenticate()));
-// passport.serializeUser(Student.serializeUser());
-// passport.deserializeUser(Student.deserializeUser());
 passport.serializeUser((user, done) => {
-    // user.permission = "faculty_permission";
     done(null, user);
 });
 passport.deserializeUser((user, done) => {
