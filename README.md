@@ -9,14 +9,28 @@
 
  
 ## Installation :
- ###### Install python and the following libraries
+ #### Install python and the following libraries
  ```bash
  pip install nltk
  pip install numpy
  pip install python-pptx
  ```
- ###### Install Nodejs and Mongo.
- ###### Clone the repository and run app.js file to run server on localhost://7000
- ```bash
- node app.js
- ```
+ #### Install Nodejs and Mongo.
+ #### Clone the repository
+  ```bash
+  git clone https://github.com/SparshJain2000/Security-systems.git
+  ```
+ #### Install node libraries
+  ```bash
+  npm install
+  ```
+ #### Declare environment variables
+ ###### Create a file .env
+  ```txt
+  MONGO_URI = 'Your mongo url'
+  SECRET = 'secret for Passport'
+  ```
+ #### Start the server (run app.js file)
+  ```bash
+  node app.js
+  ```
