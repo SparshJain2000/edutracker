@@ -18,7 +18,7 @@
  #### Install Nodejs and Mongo.
  #### Clone the repository
   ```bash
-  git clone https://github.com/SparshJain2000/Security-systems.git
+  git clone https://github.com/SparshJain2000/edutracker.git
   ```
  #### Install node libraries
   ```bash
