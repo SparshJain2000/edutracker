@@ -22,7 +22,8 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
     <!-- CSS here -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-hover-dropdown/2.2.1/bootstrap-hover-dropdown.min.js" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-hover-dropdown/2.2.1/bootstrap-hover-dropdown.min.js"
+        rel="stylesheet">
     <link rel="stylesheet" href="css/bootstrap.min.css" />
     <link rel="stylesheet" href="css/owl.carousel.min.css" />
     <link rel="stylesheet" href="css/magnific-popup.css" />
@@ -44,7 +45,8 @@
     <!-- Icons font CSS-->
     <link href="vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all" />
     <link href="vendor/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" media="all" />
-    <link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i"
+        rel="stylesheet" />
     <!-- Vendor CSS-->
     <link href="vendor/select2/select2.min.css" rel="stylesheet" media="all" />
     <link href="vendor/datepicker/daterangepicker.css" rel="stylesheet" media="all" />
@@ -125,12 +127,14 @@
                                         </div>
                                         <% } else { %>
                                             <div class="dropdown">
-                                                <button class="btn btn-default dropdown-toggle boxed-btn3" type="button" data-toggle="dropdown" data-hover="dropdown">
-                                            <%=currentUser.username%> <span class="caret"></span>
-                                        </button>
+                                                <button class="btn btn-default dropdown-toggle boxed-btn3" type="button"
+                                                    data-toggle="dropdown" data-hover="dropdown">
+                                                    <%=currentUser.username%> <span class="caret"></span>
+                                                </button>
                                                 <ul class="dropdown-menu" style="background:rgba(255,255,255,.2)">
-                                                    <li><a href="/student/logout" style="padding-left:25%;color:white">Log
-                                                    out</a></li>
+                                                    <li><a href="/student/logout"
+                                                            style="padding-left:25%;color:white">Log
+                                                            out</a></li>
 
                                                 </ul>
                                             </div>
@@ -153,23 +157,23 @@
                 <!-- <div class="card-heading"></div> -->
                 <div class="card-body">
                     <h2 class="title">Upload a File</h2>
-                    <form method="GET" action="/student">
+                    <div>
                         <div class="input-group">
-                            <input class="input--style-1" type="file" placeholder="file" name="name" />
+                            <input class="input--style-1" type="file" placeholder="file" id="file" />
                         </div>
                         <div class="input-group">
-                            <input class="input--style-1" type="text" placeholder="Topic" name="topic" />
+                            <input class="input--style-1" type="text" placeholder="Topic" id="topic" />
                         </div>
                         <!-- <div class="input-group">
                             <input class="input--style-1" type="text" placeholder="Password" name="password" />
                         </div> -->
 
                         <div class="p-t-20">
-                            <button class="btn btn--radius btn--green" type="submit">
+                            <button class="btn btn--radius btn--green" onclick="submit()">
                                 Upload
                             </button>
                         </div>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>
@@ -187,7 +191,8 @@
                                 </a>
                             </div>
                             <p>
-                                edutracker@support.com <br /> +91 9582723616 <br /> VITTBI, Technology Tower, VIT,Vellore
+                                edutracker@support.com <br /> +91 9582723616 <br /> VITTBI, Technology Tower,
+                                VIT,Vellore
                             </p>
                             <div class="socail_links">
                                 <ul>
@@ -266,7 +271,28 @@
         </div>
     </footer>
     <!--/ footer end  -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"
+        integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ=="
+        crossorigin="anonymous"></script>
+    <script>
+        const submit = (e) => {
+            const files = document.querySelector("#file");
+            console.log(files.files)
+            const fs = Array.from(files.files);
+            const file = fs[0];
+            console.log(file);
+            let reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = async () => {
+                console.log(reader.result);
+                let post = new FormData();
+                await post.append("file", file);
+                axios.post("/files/upload", post).then(res => console.log(res)).catch(err => console.log(err))
+                window.location = "/";
+            };
 
+        }
+    </script>
     <!-- Jquery JS-->
     <script src="vendor/jquery/jquery.min.js"></script>
     <!-- Vendor JS-->
