@@ -18,15 +18,18 @@ env.config();
 
 var indexRoutes = require("./routes/index"),
     studentRoutes = require("./routes/student"),
+    filesRoutes = require("./routes/files"),
     facultyRoutes = require("./routes/faculty");
 
 //===================================================================
 //Connecting mongoose to mongoDB
 
-mongoose.connect(process.env.DATABASE_URL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-});
+mongoose
+    .connect(process.env.DATABASE_URL, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+    })
+    .then((x) => console.log("Connected to mongo"));
 
 //===================================================================
 //linking external files (stylesheets and scripts)
@@ -47,8 +50,8 @@ app.use(
     require("express-session")({
         secret: process.env.SECRET,
         resave: false,
-        saveUninitialized: false
-    })
+        saveUninitialized: false,
+    }),
 );
 
 //===================================================================
@@ -85,6 +88,7 @@ app.use((req, res, next) => {
 app.use("/", indexRoutes);
 app.use("/student", studentRoutes);
 app.use("/faculty", facultyRoutes);
+app.use("/files", filesRoutes);
 
 //===================================================================
 //listening at a port
