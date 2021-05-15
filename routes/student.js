@@ -8,14 +8,14 @@ const express = require("express"),
 
 //==========================================================================
 //create a new student
-router.post("/", function(req, res) {
+router.post("/", function (req, res) {
     var newUser = new Student({ username: req.body.username, role: "Student" });
-    Student.register(newUser, req.body.password, function(error, user) {
+    Student.register(newUser, req.body.password, function (error, user) {
         if (error) {
             console.log(error.message);
             return res.redirect("/signup");
         }
-        passport.authenticate("student")(req, res, function() {
+        passport.authenticate("student")(req, res, function () {
             res.redirect("/");
         });
     });
@@ -35,9 +35,9 @@ router.post(
     "/login",
     passport.authenticate("student", {
         successRedirect: "/student",
-        failureRedirect: "/student/login"
+        failureRedirect: "/student/login",
     }),
-    function(req, res) {}
+    function (req, res) {},
 );
 
 //==========================================================================
@@ -51,14 +51,21 @@ router.get("/logout", (req, res) => {
 //==========================================================================
 //show resource page
 
-router.get("/", middleware.isStudent, (req, res) => {
+router.get(/\/(.*)/, middleware.isStudent, (req, res) => {
     let keywords;
     //==========================================================================
     //running python script
-
+    console.log(req.params[0]);
+    const path =
+        req.params[0] === "" ? "vec.pptx" : `data/files/${req.params[0]}`;
     var spawn = require("child_process").spawn;
-    var process = spawn("python", ["./app.py"]);
-    process.stdout.on("data", function(data) {
+    var process = spawn(
+        "python",
+
+        ["./app.py", path],
+        // ["-c", `import app; app.func(${path})`],
+    );
+    process.stdout.on("data", function (data) {
         keywords = data.toString();
         keywords = keywords.substring(1, keywords.length);
         keywords = keywords.split(",");
@@ -68,6 +75,7 @@ router.get("/", middleware.isStudent, (req, res) => {
         }
         let query = x;
         // let query = req.query.topic;
+        // console.log(query);
         var parj = "citedby-count",
             pary = "relevance",
             parb = "relevance",
@@ -119,8 +127,8 @@ router.get("/", middleware.isStudent, (req, res) => {
                                 var options = {
                                     url: urlg,
                                     headers: {
-                                        "User-Agent": "request"
-                                    }
+                                        "User-Agent": "request",
+                                    },
                                 };
                                 request(options, (errg, respg, bg) => {
                                     if (!errg && respg.statusCode == 200) {
@@ -130,7 +138,7 @@ router.get("/", middleware.isStudent, (req, res) => {
                                             data2: data2,
                                             data3: db,
                                             data4: dg,
-                                            query: query
+                                            query: query,
                                         });
                                     } else {
                                         console.log(respg.statusCode);
@@ -139,7 +147,7 @@ router.get("/", middleware.isStudent, (req, res) => {
                                             data2: data2,
                                             data3: db,
                                             data4: undefined,
-                                            query: query
+                                            query: query,
                                         });
                                     }
                                 });
@@ -150,7 +158,7 @@ router.get("/", middleware.isStudent, (req, res) => {
                                     data2: data2,
                                     data3: undefined,
                                     data4: undefined,
-                                    query: query
+                                    query: query,
                                 });
                             }
                         });
@@ -161,7 +169,7 @@ router.get("/", middleware.isStudent, (req, res) => {
                             data2: undefined,
                             data3: undefined,
                             data4: undefined,
-                            query: query
+                            query: query,
                         });
                     }
                 });
@@ -172,7 +180,7 @@ router.get("/", middleware.isStudent, (req, res) => {
                     data2: undefined,
                     data3: undefined,
                     data4: undefined,
-                    query: query
+                    query: query,
                 });
             }
         });
