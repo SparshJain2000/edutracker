@@ -1,3 +1,5 @@
+import sys
+import os
 # from flask import Flask, render_template
 from nltk.stem import WordNetLemmatizer
 from nltk.tokenize import RegexpTokenizer
@@ -9,8 +11,8 @@ from nltk.corpus import stopwords
 stop_words = stopwords.words('english')
 
 # your file location
-filename = r"C:\Users\Sparsh\Desktop\PROJECTS\bolt\vec.pptx"
-prs = Presentation(filename)
+# filename = r"./vec.pptx"
+prs = Presentation(os.path.join("./",  sys.argv[1]))
 slide_titles = []
 for slide in prs.slides:
     if slide.shapes.title is None:
