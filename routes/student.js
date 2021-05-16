@@ -3,6 +3,7 @@ const express = require("express"),
     request = require("request"),
     middleware = require("../middleware"),
     Student = require("../models/student"),
+    File = require("../models/file"),
     passport = require("passport"),
     path = require("path");
 
@@ -50,7 +51,11 @@ router.get("/logout", (req, res) => {
 
 //==========================================================================
 //show resource page
+router.get("/", middleware.isStudent, async (req, res) => {
+    const files = await File.find({});
 
+    res.render("files", { data: files });
+});
 router.get(/\/(.*)/, middleware.isStudent, (req, res) => {
     let keywords;
     //==========================================================================
