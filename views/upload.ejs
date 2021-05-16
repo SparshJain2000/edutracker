@@ -277,9 +277,12 @@
     <script>
         const submit = (e) => {
             const files = document.querySelector("#file");
+            const name = document.querySelector("#topic").value;
+            console.log(name)
             console.log(files.files)
             const fs = Array.from(files.files);
-            const file = fs[0];
+            let file = fs[0];
+
             console.log(file);
             let reader = new FileReader();
             reader.readAsDataURL(file);
@@ -287,8 +290,9 @@
                 console.log(reader.result);
                 let post = new FormData();
                 await post.append("file", file);
+                await post.append("topic", name);
                 axios.post("/files/upload", post).then(res => console.log(res)).catch(err => console.log(err))
-                window.location = "/";
+                // window.location = "/";
             };
 
         }
