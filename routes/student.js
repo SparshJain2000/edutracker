@@ -6,6 +6,10 @@ const express = require("express"),
     File = require("../models/file"),
     passport = require("passport"),
     path = require("path");
+env = require("dotenv");
+env.config();
+const JOURNAL_API = process.env.JOURNAL_API;
+const BOOK_API = process.env.BOOK_API;
 
 //==========================================================================
 //create a new student
@@ -90,45 +94,22 @@ router.get(/\/(.*)/, middleware.isStudent, (req, res) => {
         if (req.query.book != undefined) parb = req.query.book;
         if (req.query.project != undefined) parg = req.query.project;
         if (query == null) query = "computer science";
-        let url =
-            "https://api.elsevier.com/content/search/scopus?query=" +
-            query +
-            "&sort=" +
-            parj +
-            "&count=4&apikey=c8b5999be830e938f47c956e63168fad&format=json";
+        let url = `https://api.elsevier.com/content/search/scopus?query=${query}&sort=${parj}&count=4&apikey=${JOURNAL_API}&format=json`;
         request(url, (err, response, body) => {
             if (!err && response.statusCode === 200) {
                 var data = JSON.parse(body);
-                let url2 =
-                    "https://www.googleapis.com/youtube/v3/search?part=snippet&q=" +
-                    query +
-                    "&order=" +
-                    pary +
-                    "&type=video&maxResults=4&key=AIzaSyCcagNgMX6WBzu-Lw5xWjJyiafAnQQl6bU";
+                let url2 = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${query}&order=${pary}&type=video&maxResults=4&key=${BOOK_API}`;
                 request(url2, (error, resp, bd) => {
                     if (!error && resp.statusCode === 200) {
                         var data2 = JSON.parse(bd);
-                        var urlb =
-                            "https://www.googleapis.com/books/v1/volumes?q=" +
-                            query +
-                            "&maxResults=4&orderBy=" +
-                            parb +
-                            "&key=AIzaSyBM8K8711ozt2BRO7gKIBxctzAMHedFdPA";
+                        var urlb = `https://www.googleapis.com/books/v1/volumes?q=${query}&maxResults=4&orderBy=${parb}&key=${BOOK_API}`;
 
                         request(urlb, (errb, respb, bb) => {
                             if (!errb && respb.statusCode == 200) {
                                 var db = JSON.parse(bb);
-                                var urlg =
-                                    "https://api.github.com/search/repositories?q=" +
-                                    query +
-                                    "&sort=" +
-                                    parg +
-                                    "&order=desc&per_page=4";
+                                var urlg = `https://api.github.com/search/repositories?q=${query}&sort=${parg}&order=desc&per_page=4`;
                                 if (parg == "default")
-                                    urlg =
-                                        "https://api.github.com/search/repositories?q=" +
-                                        query +
-                                        "&per_page=4";
+                                    urlg = `https://api.github.com/search/repositories?q=${query}&per_page=4`;
                                 var options = {
                                     url: urlg,
                                     headers: {
