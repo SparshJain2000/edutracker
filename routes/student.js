@@ -13,7 +13,7 @@ const BOOK_API = process.env.BOOK_API;
 
 //==========================================================================
 //create a new student
-router.post("/", function (req, res) {
+router.post("/",  (req, res) => {
     var newUser = new Student({ username: req.body.username, role: "Student" });
     Student.register(newUser, req.body.password, function (error, user) {
         if (error) {
@@ -74,7 +74,7 @@ router.get(/\/(.*)/, middleware.isStudent, (req, res) => {
         ["./app.py", path],
         // ["-c", `import app; app.func(${path})`],
     );
-    process.stdout.on("data", function (data) {
+    process.stdout.on("data", (data) => {
         keywords = data.toString();
         keywords = keywords.substring(1, keywords.length);
         keywords = keywords.split(",");
